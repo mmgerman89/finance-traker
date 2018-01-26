@@ -8,6 +8,18 @@
     <strong>Símbolo: </strong><%= @stock.ticker %>
     <strong>Nombre: </strong><%= @stock.name %>
     <strong>Precio: </strong><%= @stock.last_price %>
-    <%= link_to "Agregar al portfolio", user_stocks_path(user: current_user, stock_ticker: @stock.ticker), class:"btn btn-xs btn-success", method: :post %>
+    <% if current_user.can_add_stock?(@stock.ticker) %>
+      <%= link_to "Agregar al portfolio", user_stocks_path(user: current_user, stock_ticker: @stock.ticker), class:"btn btn-xs btn-success", method: :post %>
+    <% else %>
+      <span class="label label-default">
+        Stock no puede ser agregado porque ya agregaste 
+        <% if !current_user.under_stock_limit? %>
+          10 stocks a tu portfolio.
+        <% end %>
+        <% if current_user.stock_already_added?(@stock.ticker) %>
+          este stock.
+        <% end %>
+      </span>
+    <% end %>
   </div>
 <% end %>
