@@ -14,7 +14,7 @@
               <td><strong>Nombre: </strong> <%= user.full_name %></td>
               <td><strong>E-mail: </strong> <%= user.email %></td>
               <td>
-                <strong>Perfil: </strong> <%= link_to "Ver perfil", "#", class: "btn btn-xs btn-success" %>
+                <strong>Perfil: </strong> <%= link_to "Ver perfil", user_path(user), class: "btn btn-xs btn-success" %>
                 <% if current_user.not_friend_with?(user.id) %>
                   <%= link_to "Agregar", add_friend_path(user: current_user, friend: user), class: "btn btn-xs btn-success", method: :post %>
                 <% else %>
